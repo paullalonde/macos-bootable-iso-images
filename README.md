@@ -8,8 +8,8 @@ So you need to have the app available locally at its normal location (i.e. `/App
 Currently supported versions:
 
 - macOS 10.15 Catalina
-- macOS Big Sur
-- macOS Monterey
+- macOS 11 Big Sur
+- macOS 12 Monterey
 
 ### Requirements
 
@@ -30,7 +30,7 @@ To download the installer app:
 
 Download links:
 
-- [macOS 10.15 Catalina](https://apps.apple.com/ca/app/macos-catalina/id1466841314?mt=12)
+- [macOS Catalina](https://apps.apple.com/ca/app/macos-catalina/id1466841314?mt=12)
 - [macOS Big Sur](https://apps.apple.com/ca/app/macos-big-sur/id1526878132?mt=12)
 - [macOS Monterey](https://apps.apple.com/app/macos-monterey/id1576738294?mt=12)
 
