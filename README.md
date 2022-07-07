@@ -2,7 +2,7 @@
 
 Contains utility scripts to construct ISO images containing a macOS installer.
 
-Each script copies the installer app into the ISO image it's building.
+Each script downloads the installer app if necessary, then copies into the ISO image it's building.
 So you need to have the app available locally at its normal location (i.e. `/Applications`).
 
 Currently supported versions:
@@ -46,6 +46,12 @@ There is a different script for each supported version of macOS:
 Once the script has finished, the ISO file is in the images directory, along with its SHA256 checksum.
 
 ### Troubleshooting
+
+Constructing a bootable ISO consumes a lot of network bandwidth.
+The installation app is very big (> 10 GB), so it takes time to download it.
+Also, when creating the installation media, the scripts download installation assets.
+They are also voluminous, and therefore take time to download.
+The idea is that downloading the assets beforehand will make the macOS installation process itself be faster; at least that's the theory.
 
 Disk Utility may interfere with the operation of the scripts.
 Specifically, it may prevent volumes used in the ISO construction process from being detached.

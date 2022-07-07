@@ -5,6 +5,7 @@ set -eu
 SELF_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 OS_NAME="BigSur"
+OS_VERSION="11.6.7"
 INSTALLER_NAME="Install macOS Big Sur"
 ISO_NAME="install-macos-11-big-sur.iso"
 DISK_SIZE=16g
