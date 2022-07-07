@@ -1,7 +1,7 @@
 function make_bootable_iso() {
   local INSTALLER_PATH="/Applications/${INSTALLER_NAME}.app"
 
-  if [[ ! -f "${INSTALLER_PATH}" ]]; then
+  if [[ ! -d "${INSTALLER_PATH}" ]]; then
     echo "Cannot find the installer app at '${INSTALLER_PATH}'." 1>&2
     echo "Consult the README to download it, then try again." 1>&2
     exit 10
