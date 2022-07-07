@@ -26,7 +26,7 @@ function make_bootable_iso() {
   local MOUNT_PATH="/Volumes/${OS_NAME}"
 
   echo "*** Creating ISO image ..."
-  hdiutil create -o "${OS_PATH}" -size "${DISK_SIZE}" -volname "${OS_NAME}" -layout GPTSPUD -fs HFS+J
+  hdiutil create -o "${OS_PATH}" -size "${DISK_SIZE}" -volname "${OS_NAME}" -layout SPUD -fs HFS+J
 
   echo "*** Attaching ISO image ..."
   hdiutil attach "${DMG_PATH}" -noverify -nobrowse -mountpoint "${MOUNT_PATH}"
