@@ -54,5 +54,8 @@ They are also voluminous, and therefore take time to download.
 The idea is that downloading the assets beforehand will make the macOS installation process itself be faster; at least that's the theory.
 
 Disk Utility may interfere with the operation of the scripts.
-Specifically, it may prevent volumes used in the ISO construction process from being detached.
+Specifically, it may prevent volumes used in the ISO construction process from being erased.
 It's best to quit it before running a script.
+
+Time Machine may also prevent volumes used in the ISO construction process from being erased.
+It's best to turn it off temporarily.

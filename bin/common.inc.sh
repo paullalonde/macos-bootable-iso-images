@@ -21,8 +21,7 @@ function make_bootable_iso() {
   local OS_PATH="${TEMP_DIR}/${OS_NAME}"
   local DMG_PATH="${OS_PATH}.dmg"
   local CDR_PATH="${OS_PATH}.cdr"
-  local ISO_PATH="${IMAGES_DIR}/${ISO_NAME}"
-  local CHECKSUM_PATH="${ISO_PATH}.sha256"
+  local CHECKSUM_NAME="${ISO_NAME}.sha256"
   local MOUNT_PATH="/Volumes/${OS_NAME}"
 
   echo "*** Creating ISO image ..."
@@ -30,7 +29,7 @@ function make_bootable_iso() {
 
   echo "*** Attaching ISO image ..."
   hdiutil attach "${DMG_PATH}" -noverify -nobrowse -mountpoint "${MOUNT_PATH}"
-  sleep 30
+  sleep 10
 
   echo "*** Creating installation media ..."
   "${INSTALLER_PATH}/Contents/Resources/createinstallmedia" --nointeraction --downloadassets --volume "${MOUNT_PATH}"
@@ -44,14 +43,16 @@ function make_bootable_iso() {
   hdiutil detach "/Volumes/${INSTALLER_NAME}"
 
   echo "***  Converting ISO image ..."
-  rm "${ISO_PATH}" "${CHECKSUM_PATH}"
   hdiutil convert "${DMG_PATH}" -format UDTO -o "${CDR_PATH}"
-  mv "${CDR_PATH}" "${ISO_PATH}"
 
   echo "***  Computing checksum ..."
-  sha256sum "${ISO_PATH}" >"${CHECKSUM_PATH}"
-  chmod 644 "${ISO_PATH}" "${CHECKSUM_PATH}"
-  chgrp wheel "${ISO_PATH}" "${CHECKSUM_PATH}"
+  pushd "${IMAGES_DIR}" >/dev/null
+  rm -f "${ISO_NAME}" "${CHECKSUM_NAME}"
+  mv "${CDR_PATH}" "${ISO_NAME}"
+  sha256sum "${ISO_NAME}" >"${CHECKSUM_NAME}"
+  chmod 644 "${ISO_NAME}" "${CHECKSUM_NAME}"
+  chgrp wheel "${ISO_NAME}" "${CHECKSUM_NAME}"
+  popd >/dev/null
 
   rm -f "${TEMP_DIR}"/*
 }
