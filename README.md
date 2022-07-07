@@ -25,7 +25,7 @@ To download the installer app:
 
 1. Click the link.
    This will take you to a Mac App Store web page, which will then open the Mac App Store locally.
-1. Click the Download button.
+1. Click the **GET** button.
    This will open System Preferences, initiating the download.
 
 Download links:
