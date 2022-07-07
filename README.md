@@ -44,3 +44,9 @@ There is a different script for each supported version of macOS:
 - `bin/make-bootable-iso.monterey.sh`
 
 Once the script has finished, the ISO file is in the images directory, along with its SHA256 checksum.
+
+### Troubleshooting
+
+Disk Utility may interfere with the operation of the scripts.
+Specifically, it may prevent volumes used in the ISO construction process from being detached.
+It's best to quit it before running a script.
