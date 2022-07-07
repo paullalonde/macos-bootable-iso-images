@@ -30,7 +30,7 @@ function make_bootable_iso() {
 
   echo "*** Attaching ISO image ..."
   hdiutil attach "${DMG_PATH}" -noverify -nobrowse -mountpoint "${MOUNT_PATH}"
-  sleep 15
+  sleep 30
 
   echo "*** Creating installation media ..."
   "${INSTALLER_PATH}/Contents/Resources/createinstallmedia" --nointeraction --downloadassets --volume "${MOUNT_PATH}"

@@ -2,7 +2,7 @@
 
 Contains utility scripts to construct ISO images containing a macOS installer.
 
-Each script downloads the installer app if necessary, then copies into the ISO image it's building.
+Each script downloads the installer app if necessary, then copies it into the ISO image it's building.
 So you need to have the app available locally at its normal location (i.e. `/Applications`).
 
 Currently supported versions:
