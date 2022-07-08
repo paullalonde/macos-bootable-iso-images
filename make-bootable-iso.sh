@@ -59,6 +59,7 @@ function make_bootable_iso() {
   sha256sum "${ISO_NAME}" >"${CHECKSUM_NAME}"
   chmod 644 "${ISO_NAME}" "${CHECKSUM_NAME}"
   sudo chown root:wheel "${ISO_NAME}" "${CHECKSUM_NAME}"
+  sudo touch -r "${ISO_NAME}" "${CHECKSUM_NAME}"
   popd >/dev/null
 
   rm -f "${TEMP_DIR}"/*
