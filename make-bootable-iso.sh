@@ -1,3 +1,17 @@
+#! /bin/bash
+
+set -eu
+
+SELF_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+function usage() {
+  echo "usage: make-bootable-iso.sh <options>"                         1>&2
+  echo "options:"                                                      1>&2
+  echo "  --os <name>  Required. The name of macOS to install."        1>&2
+  echo "               Supported values: catalina, bigsur, monterey."  1>&2
+  exit 20
+}
+
 function make_bootable_iso() {
   if [[ "${USER}" != "root" ]]; then
     echo "This script needs to be run under sudo." 1>&2
@@ -11,9 +25,8 @@ function make_bootable_iso() {
     softwareupdate --download --fetch-full-installer --full-installer-version "${OS_VERSION}"
   fi
 
-  local BASE_DIR="${SELF_DIR}/.."
-  local TEMP_DIR="${BASE_DIR}/.temp"
-  local IMAGES_DIR="${BASE_DIR}/images"
+  local TEMP_DIR="${SELF_DIR}/.temp"
+  local IMAGES_DIR="${SELF_DIR}/images"
   mkdir -p "${TEMP_DIR}" "${IMAGES_DIR}"
 
   rm -f "${TEMP_DIR}"/*
@@ -29,7 +42,7 @@ function make_bootable_iso() {
 
   echo "*** Attaching ISO image ..."
   hdiutil attach "${DMG_PATH}" -noverify -nobrowse -mountpoint "${MOUNT_PATH}"
-  sleep 10
+  # sleep 10
 
   echo "*** Creating installation media ..."
   "${INSTALLER_PATH}/Contents/Resources/createinstallmedia" --nointeraction --downloadassets --volume "${MOUNT_PATH}"
@@ -56,3 +69,57 @@ function make_bootable_iso() {
 
   rm -f "${TEMP_DIR}"/*
 }
+
+OS=''
+
+while [[ $# -gt 0 ]]
+do
+  case "$1" in
+    --os)
+    OS="$2"
+    shift
+    shift
+    ;;
+
+    *)
+    usage
+  esac
+done
+
+if [[ -z "${OS}" ]]; then
+  usage
+fi
+
+case "${OS}" in
+  catalina)
+  OS_NAME=Catalina
+  OS_VERSION="10.15.7"
+  INSTALLER_NAME="Install macOS Catalina"
+  ISO_NAME="install-macos-10.15-catalina.iso"
+  DISK_SIZE=12g
+  EXTRA_VOLUMES=()
+  ;;
+
+  bigsur)
+  OS_NAME=BigSur
+  OS_VERSION="11.6.7"
+  INSTALLER_NAME="Install macOS Big Sur"
+  ISO_NAME="install-macos-11-big-sur.iso"
+  DISK_SIZE=16g
+  EXTRA_VOLUMES=("/Volumes/Shared Support 1" "/Volumes/Shared Support")
+  ;;
+
+  monterey)
+  OS_NAME=Monterey
+  OS_VERSION="12.4"
+  INSTALLER_NAME="Install macOS Monterey"
+  ISO_NAME="install-macos-12-monterey.iso"
+  DISK_SIZE=16g
+  EXTRA_VOLUMES=()
+  ;;
+
+  *)
+  usage
+esac
+
+make_bootable_iso

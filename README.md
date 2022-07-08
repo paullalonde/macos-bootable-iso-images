@@ -1,49 +1,36 @@
-# MacOS Installer Images
+# MacOS Bootable ISO Images
 
-Contains utility scripts to construct ISO images containing a macOS installer.
+Contains a script to construct a bootable
 
-Each script downloads the installer app if necessary, then copies it into the ISO image it's building.
-So you need to have the app available locally at its normal location (i.e. `/Applications`).
-
-Currently supported versions:
+The following versions of macOS are currently supported:
 
 - macOS 10.15 Catalina
 - macOS 11 Big Sur
 - macOS 12 Monterey
+
+Each script downloads the correct installer app (eg `Install macOS Catalina.app`) if necessary,
+then copies it into the ISO image it's building.
 
 ### Requirements
 
 Obviously, these scripts only run on macOS.
 As of this writing, they have only been tested on macOS Monterey.
 
-### Obtaining the installer app
-
-Apple makes available download links for non-current versions of macOS.
-The links are on [this page](https://support.apple.com/en-us/HT211683).
-
-To download the installer app:
-
-1. Click the link.
-   This will take you to a Mac App Store web page, which will then open the Mac App Store locally.
-1. Click the **GET** button.
-   This will open System Preferences, initiating the download.
-
-Download links:
-
-- [macOS Catalina](https://apps.apple.com/ca/app/macos-catalina/id1466841314?mt=12)
-- [macOS Big Sur](https://apps.apple.com/ca/app/macos-big-sur/id1526878132?mt=12)
-- [macOS Monterey](https://apps.apple.com/app/macos-monterey/id1576738294?mt=12)
-
 ### Building the ISO image
 
-Once the installer app is available locally, run its script.
-There is a different script for each supported version of macOS:
+To build an ISO image, run this command:
 
-- `bin/make-bootable-iso.catalina.sh`
-- `bin/make-bootable-iso.bigsur.sh`
-- `bin/make-bootable-iso.monterey.sh`
+```bash
+./make-bootable-iso.sh --os <name>
+```
 
-Once the script has finished, the ISO file is in the images directory, along with its SHA256 checksum.
+where *name* is one of:
+
+- `catalina`
+- `bigsur`
+- `monterey`
+
+Once the script has finished, the ISO file is in the `images` directory, along with its SHA256 checksum.
 
 ### Troubleshooting
 
@@ -51,11 +38,14 @@ Constructing a bootable ISO consumes a lot of network bandwidth.
 The installation app is very big (> 10 GB), so it takes time to download it.
 Also, when creating the installation media, the scripts download installation assets.
 They are also voluminous, and therefore take time to download.
-The idea is that downloading the assets beforehand will make the macOS installation process itself be faster; at least that's the theory.
+The idea is that downloading the assets beforehand will make the macOS installation process itself be faster;
+at least that's the theory.
 
-Disk Utility may interfere with the operation of the scripts.
-Specifically, it may prevent volumes used in the ISO construction process from being erased.
-It's best to quit it before running a script.
+Any application that scans mounted volumes may interfere with the operation of the script.
+This problem manifests itself by "Error erasing disk" message while creating the installation media.
+Here are some of the applications that seem to trigger the problem.
 
-Time Machine may also prevent volumes used in the ISO construction process from being erased.
-It's best to turn it off temporarily.
+- **Finder** Close all Finder windows.
+- **Disk Utility** Quit it.
+- **Time Machine** Temporarily turn off automatic backups, and cancel any currently running backup.
+- **Parallels Desktop** Quit it.
