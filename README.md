@@ -16,6 +16,10 @@ then copies it into the ISO image it's building.
 Obviously, these scripts only run on macOS.
 As of this writing, they have only been tested on macOS Monterey.
 
+Apple's Command Line Tools need to be installed.
+
+The invoking user needs to be an administrator; `sudo` is called a few times.
+
 ### Building the ISO image
 
 To build an ISO image, run this command:
@@ -42,7 +46,7 @@ The idea is that downloading the assets beforehand will make the macOS installat
 at least that's the theory.
 
 Any application that scans mounted volumes may interfere with the operation of the script.
-This problem manifests itself by "Error erasing disk" message while creating the installation media.
+This problem manifests itself by an *Error erasing disk* message while creating the installation media.
 Here are some of the applications that seem to trigger the problem.
 
 - **Finder** Close all Finder windows.
