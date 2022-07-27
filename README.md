@@ -1,6 +1,6 @@
 # MacOS Bootable ISO Images
 
-Contains a script to construct a bootable
+Contains a script to construct a bootable ISO image of macOS.
 
 The following versions of macOS are currently supported:
 
